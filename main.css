@@ -1,0 +1,381 @@
+
+html,
+body {
+  height:100%;
+  font-family:"RazerF5";
+}
+div {
+  box-sizing:border-box;
+}
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background:#313131;
+    border:1px solid #000;
+}
+
+::-webkit-scrollbar-thumb {
+    background:#73BB00;
+    width:15px;
+}
+.container {
+  display:flex;
+  flex-flow:column;
+  height:100%;
+  width:100%;
+  background:url("img/3026092-2827525372-dota-.jpg") no-repeat fixed center top;
+  background-size:cover;
+  position:relative;
+}
+.container__gradient-overlay {
+  position:absolute;
+  height:100%;
+  width:100%;
+  top:0;
+  left:0;
+  background:linear-gradient(transparent 15%,#333 85%);
+}
+.button {
+  background:#313131;
+  border:none;
+  text-shadow:0px .1rem rgba(0,0,0,0.75);
+  letter-spacing:-.05rem;
+  padding:10px 12px 10px 12px;
+  color:#B5B4B4;
+  text-transform:uppercase;
+  font-size:1.2rem;
+}
+.button--green {
+  background:#73BB00;
+  color:#fff;
+}
+.user-image {
+  background:#313131;
+  height:30px;
+  width:30px;
+}
+.user-name {
+  color:#fff;
+  font-size:1rem;
+  text-transform:uppercase;
+}
+.top-menu {
+  border-top:20px solid #73BB00;
+  background:rgba(0,0,0,0.75);
+  height:120px;
+  display:flex;
+  width:100%;
+}
+.top-menu__arena-logo {
+  width:200px;
+  height:135px;
+  border-top:10px solid #73BB00;
+  background:#000;
+  position:relative;
+  top:-20px;
+  margin-right:120px;
+}
+.top-menu__arena-logo:after {
+  height:100%;
+  width:100px;
+  background:#000;
+  position:absolute;
+  right:-60px;
+  top:0;
+  content:'';
+  transform:skew(-20deg);
+}
+
+/* :before pseudo element instead of border-right for smoother edges on skewed element */
+.top-menu__arena-logo:before {
+  height:100%;
+  width:7px;
+  background:#73BB00;
+  position:absolute;
+  right:-67px;
+  top:0;
+  content:'';
+    transform:skew(-20deg);
+}
+.top-menu__content {
+  display:flex;
+  padding-right:25px;
+  justify-content:space-between;
+  width:100%;
+  align-items:center;
+}
+.top-menu__button {
+  font-size:1.4rem;
+  text-transform:uppercase;
+  font-weight:100;
+  color:#B5B4B4;
+  text-shadow:0px .15rem rgba(0,0,0,0.75);
+}
+.top-menu__user {
+  background:linear-gradient(rgba(0,0,0,0.75),rgba(0,0,0,0.25));
+  display:flex;
+  padding:0 10px 0 5px;
+  align-items:center;
+  height:3rem;
+}
+.top-menu__user .user-name {
+  padding-left:30px;
+}
+
+.main-content {
+  margin-top:25px;
+  width:100%;
+  display:flex;
+  flex-grow:1;
+  position:relative;
+  z-index:5;
+}
+.comms-sidebar {
+  width:208px;
+  box-shadow: 5px 0 12px 0 rgba(0,0,0,0.5);
+  border-right:7px solid #313131;
+  background:rgba(0,0,0,0.9);
+  display:flex;
+  flex-flow:column;
+}
+.comms-sidebar__title {
+  color:#000;
+  display:flex;
+  font-family:"RazerF5SemiBold";
+  font-size:1rem;
+  letter-spacing:-0.03rem;
+  align-items:center;
+  width:100%;
+  border-right:5px solid #000;
+  margin:5px 0 10px 0;
+  padding-left:20px;
+  text-transform:uppercase;
+  background:#73BB00;
+  height:2.25rem;
+}
+.user-list {
+  overflow:auto;
+  width:98%;
+}
+.user-list__user {
+  display:flex;
+  margin:0 0 7px 10px;
+  align-items:center;
+  position:relative;
+}
+.user-list__user .user-image {
+  background:#313131;
+  height:30px;
+  width:30px;
+}
+.user-list__user .user-status {
+  position:absolute;
+  top:0;
+  left:-3;
+  background:#5F5F5F;
+  width:3px;
+  height:100%;
+}
+.user-list__user .user-name {
+  color:#B5B4B4;
+  padding-left:10px;
+  font-size:.8rem;
+}
+.user--active .user-name {
+  color:#fff;
+}
+.user--active .user-status {
+  background:#73BB00;
+}
+.tournament-content {
+  margin:35px 100px 50px 80px;
+  display:flex;
+  flex-flow:column;
+  flex-grow:1;
+}
+.tournament-content__main-window {
+  background:linear-gradient(rgba(0,0,0,0.95) 50%,rgba(0,0,0,0.7));
+  box-shadow:0px -2px 8px 1px rgba(0,0,0,0.5);
+  padding:25px;
+  display:flex;
+  flex-flow:column;
+  flex:1;
+  width:100%;
+  margin-bottom:25px;
+}
+.tournament-content__detail-windows {
+  display:flex;
+  justify-content:space-between;
+}
+.tournament-content__game-info {
+  height:70px;
+  display:flex;
+  width:100%;
+}
+.game-info__logo {
+  height:100%;
+}
+.game-info__content {
+  display:flex;
+  margin-left:15px;
+  flex-flow:column;
+}
+.tournament-content__dropdown-container {
+  display:flex;
+  margin:25px 0 25px 0;
+}
+.tournament-content__dropdown-container .inline-dropdown {
+  margin-right:25px;
+}
+.game-info__button-container {
+  margin-left:auto;
+}
+.game-info__button-container .button {
+  margin-left:15px;
+}
+.game-title {
+  color:#fff;
+  font-size:2.5rem;
+}
+.inline-dropdown {
+  display:flex;
+  align-items:center;
+}
+.inline-dropdown__label {
+  color:#5F5F5F;
+  text-transform:uppercase;
+}
+.inline-dropdown__selection {
+  color:#fff;
+  text-transform:uppercase;
+}
+.inline-dropdown__icon {
+  color:#B7B4B4;
+  font-size:.75rem;
+  padding-left:4px;
+  line-height:1rem;
+}
+.game-subtitle {
+  font-size:1.2rem;
+  color:#5F5F5F;
+  text-transform:uppercase;
+  letter-spacing:-.03rem;
+  line-height:.8em;
+  padding-left:.1rem;
+}
+.tournament-content__tournament-list {
+  width:100%;
+  display:flex;
+  flex-flow:column;
+  overflow:auto;
+}
+.tournament-content__tournament-element {
+  display:flex;
+  width:100%;
+  background:rgba(0,0,0,0.8);
+  padding:5px;
+  align-items:center;
+}
+.tournament-content__tournament-description {
+  display:flex;
+  flex-flow:column;
+  padding-left:10px;
+}
+.tournament-content__tournament-title {
+  color:#fff;
+  text-transform:uppercase;
+}
+.tournament-content__tournament-subtitle {
+  color:#B7B4B4;
+  font-size:.8rem;
+  margin-bottom:.3rem;
+}
+.tournament-content__tournament-participants {
+  color:#fff;
+  font-size:.8rem;
+}
+.tournament-content__tournament-progress-bar {
+  height:5px;
+  width:120%;
+  background:#313131;
+  margin-top:.1rem;
+  position:relative;
+}
+.tournament-content__tournament-progress-bar-overlay {
+  position:absolute;
+  left:0;
+  top:0;
+  height:100%;
+  width:85%;
+  background:#73BB00;
+}
+.tournament-content__tournament-image {
+  background:#313131;
+  width:70px;
+  height:70px;
+}
+.window {
+  height:150px;
+  position:relative;
+  display:flex;
+  flex-grow:1;
+  width:200px;
+  justify-content:center;
+  align-items:center;
+  margin-right:25px;
+  padding-bottom:15px;
+}
+.window:last-child {
+  margin-right:0;
+}
+.window__description {
+  position:absolute;
+  z-index:2;
+  background:linear-gradient(rgba(0,0,0,0.90),rgba(0,0,0,0.75));
+  top:5px;
+  left:-5px;
+  height:2.3rem;
+  color:#fff;
+  text-transform:uppercase;
+  font-family:"RazerF5SemiBold";
+  display:flex;
+  font-size:1.2rem;
+  align-items:center;
+  padding: 0 15px 0 15px;
+}
+.window__icon {
+  height:2.3rem;
+  width:2.3rem;
+  background:rgba(0,0,0,0.2);
+  font-size:2rem;
+  padding-bottom:.3rem;
+  justify-content:center;
+  align-items:center;
+  display:flex;
+  opacity:0.7;
+  color:#fff;
+  position:absolute;
+  right:10px;
+  top:5px;
+}
+.window__message {
+  color:#fff;
+  margin:10% 10px 0 10px;
+  text-shadow:0px .12rem rgba(0,0,0,0.75);
+  text-transform:uppercase;
+}
+.window.window--green {
+  background:linear-gradient(hsla(83, 100%, 37%, 1),hsla(83, 35%, 25%, 1));
+}
+.window.window--red {
+  background:linear-gradient(hsla(12, 64%, 37%, 1),hsla(12, 35%, 25%, 1));
+}
+.window.window--active {
+  padding-top:50px;
+  background:linear-gradient(rgba(0,0,0,0.8),rgba(0,0,0,0.7));
+  justify-content:flex-start;
+  align-items:flex-start;
+  flex-flow:column;
+}
