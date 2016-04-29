@@ -3,6 +3,7 @@ html,
 body {
   height:100%;
   font-family:"RazerF5";
+  cursor:default;
 }
 div {
   box-sizing:border-box;
@@ -12,8 +13,9 @@ div {
 }
 
 ::-webkit-scrollbar-track {
-    background:#313131;
-    border:1px solid #000;
+    background:#212121;
+    border:1px solid rgba(0,0,0,0.1);
+    background-clip:padding-box;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -23,9 +25,9 @@ div {
 .container {
   display:flex;
   flex-flow:column;
-  height:100%;
+  min-height:100%;
   width:100%;
-  background:url("img/3026092-2827525372-dota-.jpg") no-repeat fixed center top;
+  background:url("img/3026092-2827525372-dota-.jpg") no-repeat center top;
   background-size:cover;
   position:relative;
 }
@@ -46,10 +48,27 @@ div {
   color:#B5B4B4;
   text-transform:uppercase;
   font-size:1.2rem;
+  cursor:pointer;
+}
+.button:hover {
+  background:#212121;
+  transition:all .2s ease;
+}
+.button:focus {
+  outline:none;
 }
 .button--green {
   background:#73BB00;
   color:#fff;
+  transition:all .2s ease;
+
+}
+.button--green:hover {
+  background:#539B00;
+  transition:all .2s ease;
+}
+.button--comms {
+  margin:auto 25px 25px 25px;
 }
 .user-image {
   background:#313131;
@@ -67,10 +86,14 @@ div {
   height:120px;
   display:flex;
   width:100%;
+  position:relative;
+  z-index:10;
 }
 .top-menu__arena-logo {
-  width:200px;
+  width:170px;
   height:135px;
+  cursor:pointer;
+  padding:25px 0 25px 25px;
   border-top:10px solid #73BB00;
   background:#000;
   position:relative;
@@ -84,6 +107,7 @@ div {
   position:absolute;
   right:-60px;
   top:0;
+  z-index:-1;
   content:'';
   transform:skew(-20deg);
 }
@@ -91,13 +115,39 @@ div {
 /* :before pseudo element instead of border-right for smoother edges on skewed element */
 .top-menu__arena-logo:before {
   height:100%;
-  width:7px;
+  width:5px;
   background:#73BB00;
   position:absolute;
-  right:-67px;
+  right:-65px;
   top:0;
   content:'';
     transform:skew(-20deg);
+}
+.arena-logo {
+  height:100%;
+  display:flex;
+}
+.arena-logo__image {
+  height:100%;
+}
+.arena-logo__wordmark {
+  display:flex;
+  height:100%;
+  justify-content:center;
+  flex-flow:column;
+  margin-left:15px;
+  color:#fff;
+}
+.arena-logo__razer {
+  font-size:.8rem;
+  padding-left:.1rem;
+  color:#73BB00;
+  text-transform:uppercase;
+}
+.arena-logo__arena {
+  font-size:1.5rem;
+  text-transform:uppercase;
+  line-height:.9em;
 }
 .top-menu__content {
   display:flex;
@@ -112,6 +162,28 @@ div {
   font-weight:100;
   color:#B5B4B4;
   text-shadow:0px .15rem rgba(0,0,0,0.75);
+  cursor:pointer;
+  transition: all .2s ease;
+}
+.top-menu__button:hover {
+  color:#E5E4E4;
+  transition:all .2s ease;
+}
+.top-menu__button--active {
+  color:#73BB00;
+}
+.top-menu__button--active:hover {
+  color:#73BB00;
+}
+.top-menu__dropdown-button {
+  display:flex;
+  align-items:center;
+}
+.top-menu__dropdown-icon {
+  color:#B5B4B4;
+  font-size:.8rem;
+  padding:3px 0 0 3px;
+  transform:scale(0.8,1);
 }
 .top-menu__user {
   background:linear-gradient(rgba(0,0,0,0.75),rgba(0,0,0,0.25));
@@ -133,12 +205,30 @@ div {
   z-index:5;
 }
 .comms-sidebar {
-  width:208px;
+  width:212px;
   box-shadow: 5px 0 12px 0 rgba(0,0,0,0.5);
   border-right:7px solid #313131;
   background:rgba(0,0,0,0.9);
   display:flex;
   flex-flow:column;
+  position:relative;
+}
+.comms-sidebar__hide-button {
+  position:absolute;
+  right:-20px;
+  top:5px;
+  width:20px;
+  background:rgba(50,50,50,0.8);
+  height:2.25rem;
+  cursor:pointer;
+}
+.comms-sidebar__hide-button:after {
+  position:absolute;
+  top:8px;
+  left:7px;
+  content:'<';
+  color:rgba(255,255,255,0.6);
+  transform:scale(1,2);
 }
 .comms-sidebar__title {
   color:#000;
@@ -159,11 +249,39 @@ div {
   overflow:auto;
   width:98%;
 }
+.user-list__divider {
+  background:rgba(35,35,35,0.7);
+  width:100%;
+  height:12px;
+  margin:10px 0 15px 0;
+  cursor:row-resize;
+  position:relative;
+}
+.user-list__divider:after {
+  position:absolute;
+  top:-10px;
+  bottom:0;
+  left:0;
+  right:0;
+  font-family:"RazerF5SemiBold";
+  letter-spacing:0.05rem;
+  margin:auto;
+  font-size:18px;
+  content:"...";
+  color:rgba(255,255,255,0.5);
+  width:10px;
+}
 .user-list__user {
   display:flex;
   margin:0 0 7px 10px;
   align-items:center;
   position:relative;
+  transition:all .2s ease;
+  cursor:pointer;
+}
+.user-list__user:hover {
+  background:#212121;
+  transition:all .2s ease;
 }
 .user-list__user .user-image {
   background:#313131;
@@ -196,7 +314,7 @@ div {
   flex-grow:1;
 }
 .tournament-content__main-window {
-  background:linear-gradient(rgba(0,0,0,0.95) 50%,rgba(0,0,0,0.7));
+  background:linear-gradient(rgba(0,0,0,0.95),rgba(15,15,15,0.9));
   box-shadow:0px -2px 8px 1px rgba(0,0,0,0.5);
   padding:25px;
   display:flex;
@@ -204,6 +322,8 @@ div {
   flex:1;
   width:100%;
   margin-bottom:25px;
+  min-height:500px;
+  position:relative;
 }
 .tournament-content__detail-windows {
   display:flex;
@@ -229,6 +349,12 @@ div {
 .tournament-content__dropdown-container .inline-dropdown {
   margin-right:25px;
 }
+.tournament-content__tournament-status-right {
+  color:#fff;
+  margin-left:auto;
+  padding-top:10px;
+  align-self:flex-start;
+}
 .game-info__button-container {
   margin-left:auto;
 }
@@ -250,12 +376,22 @@ div {
 .inline-dropdown__selection {
   color:#fff;
   text-transform:uppercase;
+  cursor:pointer;
 }
 .inline-dropdown__icon {
   color:#B7B4B4;
   font-size:.75rem;
   padding-left:4px;
   line-height:1rem;
+  cursor:pointer;
+}
+.inline-dropdown__selection:hover {
+  color:#73BB00;
+  transition:all .2s ease;
+}
+.inline-dropdown__selection:hover + .inline-dropdown__icon{
+  color:#73BB00;
+  transition:all .2s ease;
 }
 .game-subtitle {
   font-size:1.2rem;
@@ -269,14 +405,32 @@ div {
   width:100%;
   display:flex;
   flex-flow:column;
-  overflow:auto;
+  padding:0 15px 0 25px;
+}
+.tournament-content__scroll-wrapper {
+  overflow: auto;
+  position: absolute;
+  width: 98%;
+  left: 0;
+  bottom: 25px;
+  height: calc(100% - 200px);
 }
 .tournament-content__tournament-element {
   display:flex;
   width:100%;
-  background:rgba(0,0,0,0.8);
-  padding:5px;
+  background:rgba(0,0,0,0.65);
+  padding:5px 20px 5px 5px;
+  margin-bottom:10px;
   align-items:center;
+  transition:all .2s ease;
+  cursor:pointer;
+}
+.tournament-content__tournament-element:hover {
+    background:rgba(0,0,0,1);
+    transform:scale(1.01);
+    transition:all .2s ease;
+    box-shadow:0 0 6px 1px rgba(0,0,0,0.2);
+
 }
 .tournament-content__tournament-description {
   display:flex;
@@ -358,7 +512,14 @@ div {
   color:#fff;
   position:absolute;
   right:10px;
+  cursor:pointer;
   top:5px;
+  transition:all .2s ease;
+}
+.window__icon:hover {
+  background:rgba(0,0,0,0.5);
+  opacity:0.9;
+  transition:all .2s ease;
 }
 .window__message {
   color:#fff;
@@ -378,4 +539,23 @@ div {
   justify-content:flex-start;
   align-items:flex-start;
   flex-flow:column;
+}
+@media (max-width:1100px) {
+  html {
+    font-size:14px;
+  }
+
+  .tournament-content__detail-windows {
+    flex-flow:column;
+  }
+  .window {
+    width:100%;
+    margin-bottom:25px;
+  }
+  .tournament-content__main-window {
+    min-height:400px;
+  }
+  .tournament-content__dropdown-container {
+    flex-flow:column;
+  }
 }

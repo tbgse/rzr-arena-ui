@@ -9,12 +9,23 @@
   <div class='container'>
     <div class='container__gradient-overlay'></div>
     <div class='top-menu'>
-      <div class='top-menu__arena-logo'></div>
+      <div class='top-menu__arena-logo'>
+        <div class='arena-logo'>
+          <img class='arena-logo__image' src='img/arena.svg' />
+          <div class='arena-logo__wordmark'>
+            <div class='arena-logo__razer'>Razer</div>
+            <div class='arena-logo__arena'>Arena</div>
+          </div>
+        </div>
+      </div>
       <div class='top-menu__content'>
-        <div class='top-menu__button button--active'>Tournaments</div>
+        <div class='top-menu__button top-menu__button--active'>Tournaments</div>
         <div class='top-menu__button'>Leagues & Seasons</div>
         <div class='top-menu__button'>Matchmaking</div>
-        <div class='top-menu__button'>More</div>
+        <div class='top-menu__dropdown-button'>
+          <div class='top-menu__button'>More</div>
+          <div class='top-menu__dropdown-icon'>&#9660;</div>
+        </div>
         <div class='top-menu__user'>
           <img class='user-image' src='img/user-image.png' />
           <div class='user-name'>Travis Howle</div>
@@ -23,6 +34,7 @@
       </div>
       <div class='main-content'>
       <div class='comms-sidebar'>
+        <div class='comms-sidebar__hide-button'></div>
         <div class='comms-sidebar__title'>Comms Chat</div>
         <div class='user-list'>
         <div class='user-list__user user--active'>
@@ -46,6 +58,25 @@
           <div class='user-name'>sean may</div>
         </div>
       </div>
+      <div class='user-list'>
+      <div class='user-list__divider'></div>
+      <div class='user-list__user'>
+        <div class='user-status'></div>
+        <div class='user-image'></div>
+        <div class='user-name'>arena team chat</div>
+      </div>
+      <div class='user-list__user'>
+        <div class='user-status'></div>
+        <div class='user-image'></div>
+        <div class='user-name'>test group chat</div>
+      </div>
+      <div class='user-list__user'>
+        <div class='user-status'></div>
+        <div class='user-image'></div>
+        <div class='user-name'>cs community chat</div>
+      </div>
+    </div>
+    <button class='button button--comms'>add a friend</button>
       </div>
       <div class='tournament-content'>
         <div class='tournament-content__main-window'>
@@ -72,19 +103,22 @@
             <div class='inline-dropdown__icon'>&#9660;</div>
           </div>
         </div>
-        <div class='tournament-content__tournament-list'>
-          <div class='tournament-content__tournament-element'>
-            <div class='tournament-content__tournament-image'></div>
-            <div class='tournament-content__tournament-description'>
-              <div class='tournament-content__tournament-title'>tournament name</div>
-              <div class='tournament-content__tournament-subtitle'>5v5 Single Elemination</div>
-              <div class='tournament-content__tournament-participants'>60 of 64 Participants</div>
-              <div class='tournament-content__tournament-progress-bar'>
-              <div class='tournament-content__tournament-progress-bar-overlay'></div>
+        <div class='tournament-content__scroll-wrapper'>
+          <div class='tournament-content__tournament-list'>
+            <div class='tournament-content__tournament-element'>
+              <div class='tournament-content__tournament-image'></div>
+              <div class='tournament-content__tournament-description'>
+                <div class='tournament-content__tournament-title'>tournament name</div>
+                <div class='tournament-content__tournament-subtitle'>5v5 Single Elemination</div>
+                <div class='tournament-content__tournament-participants'>60 of 64 Participants</div>
+                <div class='tournament-content__tournament-progress-bar'>
+                <div class='tournament-content__tournament-progress-bar-overlay'></div>
               </div>
-          </div>
+            </div>
+            <div class='tournament-content__tournament-status-right'>Starts in 5 days</div>
           </div>
         </div>
+      </div>
         </div>
         <div class='tournament-content__detail-windows'>
           <div class='window window--green'>
@@ -114,17 +148,17 @@
             <div class='user-list__user'>
               <div class='user-status'></div>
               <div class='user-image'></div>
-              <div class='user-name'>kenneth lim</div>
+              <div class='user-name'>Mark Ho</div>
             </div>
             <div class='user-list__user'>
               <div class='user-status'></div>
               <div class='user-image'></div>
-              <div class='user-name'>kenneth lim</div>
+              <div class='user-name'>Sean May</div>
             </div>
             <div class='user-list__user'>
               <div class='user-status'></div>
               <div class='user-image'></div>
-              <div class='user-name'>kenneth lim</div>
+              <div class='user-name'>Tobias Guse</div>
             </div>
           </div>
           </div>
