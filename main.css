@@ -86,7 +86,7 @@ div {
   height:120px;
   display:flex;
   width:100%;
-  position:relative;
+  position:fixed;
   z-index:10;
 }
 .top-menu__arena-logo {
@@ -197,7 +197,7 @@ div {
 }
 
 .main-content {
-  margin-top:25px;
+  margin-top:125px;
   width:100%;
   display:flex;
   flex-grow:1;
@@ -211,7 +211,15 @@ div {
   background:rgba(0,0,0,0.9);
   display:flex;
   flex-flow:column;
-  position:relative;
+  position:fixed;
+  margin-top:20px;
+  height:calc(100% - 145px);
+  transition:all .7s ease;
+  transition-delay:.2s;
+}
+.comms-sidebar.hidden {
+  transform:translateX(-207px);
+  transition:all .7s ease;
 }
 .comms-sidebar__hide-button {
   position:absolute;
@@ -308,10 +316,18 @@ div {
   background:#73BB00;
 }
 .tournament-content {
-  margin:35px 100px 50px 80px;
+  margin:35px 50px 50px 50px;
+  padding-left:230px;
   display:flex;
   flex-flow:column;
   flex-grow:1;
+  transition: all .7s ease;
+}
+.tournament-content.wide {
+  padding-left:0px;
+  transform:translate3d(0,0,0);
+  transition: all .7s ease;
+  transition-delay:.2s;
 }
 .tournament-content__main-window {
   background:linear-gradient(rgba(0,0,0,0.95),rgba(15,15,15,0.9));
