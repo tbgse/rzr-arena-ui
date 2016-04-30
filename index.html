@@ -4,6 +4,7 @@
   <link rel='stylesheet' type='text/css' href='normalize.css' />
     <link rel='stylesheet' type='text/css' href='http://assets.razerzone.com/eeimages/assets/css/razerf5/razerf5.css' />
   <link rel='stylesheet' type='text/css' href='main.css' />
+<meta http-equiv="Content-type" name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width">
   </head>
   <body>
   <div class='container'>
@@ -18,13 +19,28 @@
           </div>
         </div>
       </div>
-      <div class='top-menu__content'>
-        <div class='top-menu__button top-menu__button--active'>Tournaments</div>
+      <div class='top-menu__content content--mobile'>
+        <div class='dropdown top-menu__dropdown-button'>
+          <div class='dropdown-selection top-menu__button'>Menu</div>        </div>
+        <div class='top-menu__user'>
+          <img class='user-image' src='img/user-image.png' />
+        </div>
+      </div>
+
+      <div class='top-menu__content content--full'>
+        <div class='top-menu__button link-active'>Tournaments</div>
         <div class='top-menu__button'>Leagues & Seasons</div>
         <div class='top-menu__button'>Matchmaking</div>
-        <div class='top-menu__dropdown-button'>
-          <div class='top-menu__button'>More</div>
-          <div class='top-menu__dropdown-icon'>&#9660;</div>
+        <div class='dropdown top-menu__dropdown-button'>
+          <div class='dropdown-selection top-menu__button'>More</div>
+          <div class='dropdown-icon top-menu__dropdown-icon'>&#9660;</div>
+          <div class='dropdown-menu dropdown--top'>
+            <ul>
+              <li>Section A</li>
+              <li>Section B</li>
+              <li>Section C</li>
+            </ul>
+          </div>
         </div>
         <div class='top-menu__user'>
           <img class='user-image' src='img/user-image.png' />
@@ -36,7 +52,7 @@
       <div class='comms-sidebar' id='comms-sidebar'>
         <div class='comms-sidebar__hide-button' id='hide-comms-sidebar'></div>
         <div class='comms-sidebar__title'>Comms Chat</div>
-        <div class='user-list'>
+        <div class='user-list user-list--top' id='comms-userlist'>
         <div class='user-list__user user--active'>
           <div class='user-status'></div>
           <div class='user-image'></div>
@@ -58,8 +74,8 @@
           <div class='user-name'>sean may</div>
         </div>
       </div>
-      <div class='user-list'>
-      <div class='user-list__divider'></div>
+      <div class='user-list user-list--bottom'>
+      <div class='user-list__divider' id='comms-divider'></div>
       <div class='user-list__user'>
         <div class='user-status'></div>
         <div class='user-image'></div>
@@ -80,27 +96,43 @@
       </div>
       <div class='tournament-content' id='tournament-content'>
         <div class='tournament-content__main-window'>
+          <div class='tournament-content__top'>
           <div class='tournament-content__game-info'>
             <img class='game-info__logo' src='img/dota_2_icon.png'></img>
             <div class='game-info__content'>
               <div class='game-title'>DOTA 2</div>
               <div class='game-subtitle'>view active tournaments</div>
             </div>
-            <div class='game-info__button-container'>
-              <button class='button'>create tournament</button>
-              <button class='button button--green'>play now</button>
+          </div>
+          <div class='game-info__button-container'>
+            <button class='button'>create tournament</button>
+            <button class='button button--green'>play now</button>
+          </div>
+        </div>
+          <div class='tournament-content__dropdown-container'>
+          <div class='dropdown inline-dropdown'>
+            <div class='inline-dropdown__label'>Event Type &nbsp; </div>
+            <div class='dropdown-selection dropdown-replace inline-dropdown__selection'>single elimination only</div>
+            <div class='dropdown-icon inline-dropdown__icon'>&#9660;</div>
+            <div class='dropdown-menu'>
+              <ul>
+                <li>Double elimination only</li>
+                <li>All event types</li>
+                <li>Running out of options</li>
+                <li>We have to go deeper</li>
+              </ul>
             </div>
           </div>
-          <div class='tournament-content__dropdown-container'>
-          <div class='inline-dropdown'>
-            <div class='inline-dropdown__label'>Event Type</div>
-            <div class='inline-dropdown__selection'>&nbsp; single elimination only</div>
-            <div class='inline-dropdown__icon'>&#9660;</div>
-          </div>
-          <div class='inline-dropdown'>
-            <div class='inline-dropdown__label'>Join Type</div>
-            <div class='inline-dropdown__selection'>&nbsp; team and player</div>
-            <div class='inline-dropdown__icon'>&#9660;</div>
+          <div class='dropdown inline-dropdown'>
+            <div class='inline-dropdown__label'>Join Type &nbsp; </div>
+            <div class='dropdown-selection dropdown-replace inline-dropdown__selection'>team and player</div>
+            <div class='dropdown-icon inline-dropdown__icon'>&#9660;</div>
+            <div class='dropdown-menu'>
+              <ul>
+                <li>Team only</li>
+                <li>Player only</li>
+              </ul>
+            </div>
           </div>
         </div>
         <div class='tournament-content__scroll-wrapper'>
@@ -163,6 +195,20 @@
           </div>
           </div>
         </div>
+        <div clas='footer'>
+        <div class='footer__menu'>
+         <a class='footer__element'>Razerzone.com</a>
+         <a class='footer__element'>FAQ</a>
+         <a class='footer__element'>Legal Notices</a>
+         <a class='footer__element'>Terms & Conditions</a>
+         <a class='footer__element'>Privacy Policy</a>
+         <a class='footer__element'>Contact Us</a>
+        </div>
+        <div class='footer__copyright'>
+          <div class='footer__copyright-main'>Copyright &COPY; 2016 - Razer Inc. All rights reserved</div>
+          <div class='footer__copyright-secondary'>Portions of Arena are powered by Steam.</div>
+        </div>
+      </div>
       </div>
     </div>
   </div>
