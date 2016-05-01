@@ -47,7 +47,19 @@ for (var i = 0; i <= dropdowns.length - 1; i++) {
     lastId = null;
   })
 }
-
+//mobile menu button listener
+document.getElementById('mobile-menu-button').addEventListener('click',function(){
+  document.getElementById('mobile-menu').style.display = 'block';
+  setTimeout(function(){
+    document.getElementById('mobile-menu').classList.toggle('active');
+  },50)
+});
+document.getElementById('mobile-menu').addEventListener('click',function(){
+  document.getElementById('mobile-menu').classList.toggle('active');
+  setTimeout(function(){
+    document.getElementById('mobile-menu').style.display = 'none';
+  },500)
+});
 //comms sidebar event listeners
 document.getElementById('comms-sidebar').addEventListener('mousedown',function(e){
   offsetTop = document.getElementById('comms-sidebar').offsetTop;
