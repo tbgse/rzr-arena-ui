@@ -48,6 +48,7 @@
         <div class='stats-element__matches' v-show='view === "match history"' transition='from-top' >
           <div class='stats-element__match-container' v-for='match in game.Matches'>
             <div class='stats-element__more-info-overlay'></div>
+            <div class='stats-element__status-bar' :class='{"status-bar--win" : match.WinStatus === 1, "status-bar--lost": match.WinStatus === 0, "status-bar--tie": match.WinStatus === 2}'></div>
             <div class='stats-element__match-players'>
               <div class='player-container'>
                   <div class='player-icon-small' v-bind:style="{ backgroundImage: 'url(' + match.EntityParticipantA.Profile.LogoUrl + ')' } | validateImage"></div>
@@ -61,6 +62,9 @@
           </div>
 
           <div class='stats-element__match-details'>
+            <div class='stats-element__win-status green' v-show='match.WinStatus === 1'>Won</div>
+            <div class='stats-element__win-status red' v-show='match.WinStatus === 0'>Lost</div>
+            <div class='stats-element__win-status yellow'v-show='match.WinStatus === 2'>Tie</div>
 
             <div>Map: {{match.GameTitleMapProperName}}</div>
             <div>{{match.EntityParticipantA.Score}}</div>

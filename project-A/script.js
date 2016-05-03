@@ -13,7 +13,7 @@ $.ajax({
     el:'#app',
     data: {
       view:'statistics',
-      id:data.Response.Id,
+      id:data.Response.EntityId,
       userName:data.Response.DisplayName,
       firstName:data.Response.FirstName,
       lastName:data.Response.LastName,
@@ -22,7 +22,7 @@ $.ajax({
       profile:data.Response.Profile,
       avatar:data.Response.LogoUrl,
       stats:data.Response.Statistics,
-      games:data.Response.Games,
+      games:includeWinner(data.Response.Games,data.Response.EntityId,data.Response.Teams),
       teams:data.Response.Teams
     }
   })
@@ -65,6 +65,43 @@ Vue.filter('validateImage',function(src){
   }
   return src;
 })
+//determine won / lost matches by matching entities
+function includeWinner(games,id,teams){
+  for (var i = 0; i<games.length;i++){
+    for (var j = 0; j<games[i].Matches.length;j++){
+        games[i].Matches[j].WinStatus = 0;
+        if (games[i].Matches[j].EntityParticipantA.Score > games[i].Matches[j].EntityParticipantB.Score) {
+          teams.forEach(function(x){
+            if (x.EntityId === games[i].Matches[j].EntityParticipantA.Id) {
+              games[i].Matches[j].WinStatus = 1;
+              console.log(games[i].Matches[j].EntityParticipantA.Profile.Nickname)
+            }
+          })
+          if (id === games[i].Matches[j].EntityParticipantA.Id) {
+              games[i].Matches[j].WinStatus = 1;
+          }
+        }
+        else if(games[i].Matches[j].EntityParticipantA.Score < games[i].Matches[j].EntityParticipantB.Score) {
+          teams.forEach(function(x){
+            if (x.EntityId === games[i].Matches[j].EntityParticipantB.Id) {
+              games[i].Matches[j].WinStatus = 1;
+            }
+          })
+          if (id === games[i].Matches[j].EntityParticipantB.Id) {
+              games[i].Matches[j].WinStatus = 1;
+          }
+        }
+        else if (games[i].Matches[j].EntityParticipantA.Score === games[i].Matches[j].EntityParticipantB.Score) {
+          games[i].Matches[j].WinStatus = 2;
+        }
+        else {
+          console.log('else fired')
+
+        }
+    }
+  }
+  return games;
+}
 //vue filter to calculate the time since last activity and return a response string
 Vue.filter('friendlyTime',function(time){
   var d = new Date;
@@ -73,12 +110,10 @@ Vue.filter('friendlyTime',function(time){
   var secondsElapsed = totalElapsed%60;
   var totalMinutes = Math.floor(totalElapsed / 60);
   var minutesElapsed = totalMinutes%60;
-  console.log(minutesElapsed)
   var totalHours = Math.floor(totalMinutes/60);
   var hoursElapsed = totalHours%24;
   var totalDays = Math.floor(totalHours/24);
   var daysElapsed = totalDays%24;
-  console.log(totalHours)
   if (daysElapsed > 1) {
     return daysElapsed +" days ago.";
   }

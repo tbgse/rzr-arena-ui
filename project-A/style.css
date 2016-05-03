@@ -30,6 +30,16 @@ a:hover {
   color:#73BB00;
   transition:color .2s ease;
 }
+.green {
+  color:#73BB00;
+}
+.red {
+  color:#E13C22;
+}
+.yellow {
+  color:#E8BA2E;
+}
+
 .window {
   margin-top:100px;
   margin-bottom:100px;
@@ -288,13 +298,14 @@ a:hover {
   align-items:center;
   background:rgba(0,0,0,0.5);
   color:#ccc;
-  padding:5px;
+  padding:5px 5px 5px 10px;
+  box-sizing:border-box;
   width:98%;
 
 }
 .stats-element__match-details {
-  padding:5px;
   display:flex;
+  align-items:center;
 }
 .stats-element_match-versus {
 left: 10px;
@@ -336,6 +347,43 @@ top: 12px;
   margin-left:auto;
   margin-right:25px;
   color:#444;
+}
+.stats-element__status-bar {
+  position:absolute;
+  background:#666;
+  left:0;
+  top:0;
+  height:100%;
+  width:5px;
+  z-index:5;
+}
+.stats-element__win-status {
+  background:#333;
+  padding:5px 10px 5px 10px;
+  min-width:30px;
+  position:relative;
+  z-index:0;
+  margin-right:45px;
+}
+.stats-element__win-status:after {
+  background:#333;
+  position:absolute;
+  right:-20px;
+  transform:skewX(45deg);
+  content:'';
+  height:100%;
+  width:40px;
+  z-index:-1;
+  top:0;
+}
+.status-bar--win {
+  background:#73BB00;
+}
+.status-bar--lost {
+  background:rgba(154,58,34,1);
+}
+.status-bar--tie {
+  background:#E8BA2E;
 }
 /* transitions */
 .from-left-transition {
