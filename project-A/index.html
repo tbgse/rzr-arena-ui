@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+    <link rel='stylesheet' type='text/css' href='http://assets.razerzone.com/eeimages/assets/css/razerf5/razerf5.css' />
+    <link rel='stylesheet' type='text/css' href='style.css' />
+    <link rel='stylesheet' type='text/css' href='normalize.css' />
+    <script src='vue.js'></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+
+  </head>
+  <body id='app'>
+    <div class='container'>
+      <div class='window'>
+      <div class='top-info'>
+        <div class='background-field'></div>
+      <div class='user-image'v-bind:style="{ backgroundImage: 'url(' + avatar + ')' }"></div>
+      <div class='user-details'>
+        <div class='user-details__username'>{{firstName}}</div>
+        <div class='user-details__username-main'>{{userName}}</div>
+        <div class='user-details__teams'>Playing at <a href='#' v-for='team in teams'>{{team.DisplayName}},</a></div>
+        <div>United States</div>
+        <div>Arena Member since {{memberSince}}</div>
+        <div>Last Online&nbsp;{{lastOnline | friendlyTime}}</div>
+        <div class='top-info__game-list'>
+          <div class='top-info__game' v-for="game in games">
+            <div class='top-info__game-logo'><img :src='game.GameImageSmallUrl'/></div>
+          </div>
+        </div>
+      </div>
+
+      </div>
+      <div class='menu'>
+        <div class='menu__button button--active'>Statistics</div>
+        <div class='menu__button'>Match History</div>
+        <div class='menu__button'>Teams</div>
+        <div class='menu__button'>Schedule</div>
+
+      </div>
+      <div class='content' id='content'>
+      <div class='stats-element' v-for='game in games' v-show='view === "statistics" || view === "match history"'  transition="enter-stagger" stagger="100">
+        <div class='stats-element__gradient-overlay'></div>
+        <div class='stats-element__background' v-bind:style="{ backgroundImage: 'url(' + game.GameBackgroundUrl + ')' }"></div>
+        <div class='stats-element__game-logo'><img :src="game.GameImageLargeUrl" /></div>
+        <div class='stats-element__content-right'>
+        <div class='stats-element__game-name'>{{game.GameName}}</div>
+        <div class='stats-element__key-metrics'><span>Total Matches Played: <span class='bold'>{{game.Statistics.MatchesPlayedCount}}</span></span><span>Current Win Streak: <span class='bold'>{{game.Statistics.WinStreak}}</span></span><span>Current Loss Streak: <span class='bold'>{{game.Statistics.LossStreak}}</span></span></div>
+        <div class='stats-element__matches' v-show='view === "match history"' transition='from-top' >
+          <div class='stats-element__match-container' v-for='match in game.Matches'>
+            <div class='stats-element__more-info-overlay'></div>
+            <div class='stats-element__match-players'>
+              <div class='player-container'>
+                  <div class='player-icon-small' v-bind:style="{ backgroundImage: 'url(' + match.EntityParticipantA.Profile.LogoUrl + ')' } | validateImage"></div>
+            <div>{{match.EntityParticipantA.Profile.Nickname}}</div>
+          </div>
+                        <div class='stats-element_match-versus'>&nbsp;vs&nbsp;</div>
+                        <div class='player-container'>
+                        <div class='player-icon-small' v-bind:style="{ backgroundImage: 'url(' + match.EntityParticipantB.Profile.LogoUrl + ')'} | validateImage"></div>
+                        <div>{{match.EntityParticipantB.Profile.Nickname}}</div>
+                      </div>
+          </div>
+
+          <div class='stats-element__match-details'>
+
+            <div>Map: {{match.GameTitleMapProperName}}</div>
+            <div>{{match.EntityParticipantA.Score}}</div>
+            <div>{{match.EntityParticipantB.Score}}</div>
+            <div class='stats-element__date'>{{match.MatchCompleteDateTime | friendlyTime}}</div>
+
+          </div>
+          </div>
+          </div>
+        <div class='stats-element__chart' v-show='view === "statistics"' transition='from-left'>
+        <canvas :id="'chart-'+$index"></canvas>
+      </div>
+    </div>
+      </div>
+    </div>
+  </div>
+    </div>
+    <script src='chart.js'></script>
+    <script src='script.js'></script>
+
+  </body>
+</html>

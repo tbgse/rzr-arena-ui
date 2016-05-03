@@ -1,0 +1,364 @@
+@import url(https://fonts.googleapis.com/css?family=Titillium+Web:400,700,600,300);
+html,
+body {
+  background:#999;
+  height:100%;
+  font-family:"RazerF5";
+}
+a {
+  color:#ddd;
+}
+a:hover {
+  color:#73BB00;
+}
+.bold {
+  font-weight:600;
+}
+.container {
+  display:flex;
+  width:100%;
+  min-height:100%;
+  justify-content:center;
+}
+.player-container {
+  display:flex;
+  align-items:center;
+  cursor:pointer;
+  transition:color .2s ease;
+}
+.player-container:hover {
+  color:#73BB00;
+  transition:color .2s ease;
+}
+.window {
+  margin-top:100px;
+  margin-bottom:100px;
+  width:920px;
+  display:flex;
+  background:#f5f5f5;
+  box-shadow: 0 0 25px 3px rgba(0,0,0,0.3);
+  flex-flow:column;
+}
+.user-image {
+ height:100%;
+ width:25%;
+ background-size:cover;
+ background-position:center center;
+ position:relative;
+}
+.user-image:after {
+  position:absolute;
+  top:0;
+  left:0;
+  height:100%;
+  width:12px;
+  background:#73BB00;
+  content:'';
+  z-index:10;
+}
+.player-icon-small {
+  height:32px;
+  width:32px;
+  border-radius:50%;
+  background-size:cover;
+  margin-right:10px;
+}
+.top-info {
+  height:250px;
+  box-sizing:border-box;
+  display:flex;
+  position:relative;
+  background:#333;
+  color:#bbb;
+  z-index:2;
+  position:relative;
+  overflow:hidden;
+}
+.background-field {
+  background:#252525;
+  position:absolute;
+  bottom:-120px;
+  left:280px;
+  width:100%;
+  height:110%;
+  transform:rotate(-40deg);
+  overflow:hidden;
+  z-index:0;
+}
+.top-info__game-list {
+  align-items:flex-end;
+  position:absolute;
+  right:15px;
+  bottom:15px;
+  margin-top:10px;
+  font-size:1rem;
+  height:40px;
+  display:flex;
+}
+.top-info__game {
+  display:flex;
+  margin:12px;
+  margin-left:0px;
+  float:left;
+
+}
+.top-info__game-name {
+  margin-left:10px;
+}
+.top-info__game-logo {
+  height:67px;
+}
+
+.top-info__game-logo img {
+  height:100%;
+  border-radius:50%;
+  border:7px solid #333;
+  box-sizing:border-box;
+  transition:transform .2s ease;
+}
+.top-info__game-logo img:hover {
+  transform:scale(1.1);
+  transition:transform .2s ease;
+}
+.user-details {
+  padding-left:50px;
+  padding-top:40px;
+  width:calc(100% - 300px);
+  position:relative;
+  z-index:1;
+}
+.user-details__username {
+  font-size:1.5rem;
+  font-weight:600;
+  color:#eee;
+}
+.user-details__username-main {
+  font-weight:600;
+  font-family:"RazerF5Bold";
+  font-size:2rem;
+  color:#fff;
+  line-height:.9em;
+}
+.user-details__teams {
+  font-size:1.1rem;
+  line-height:2em;
+  margin-bottom:20px;
+  font-weight:600;
+  color:#eee;
+}
+
+.menu {
+  width:100%;
+  height:60px;
+  display:flex;
+  background:#555;
+}
+.menu__button {
+ color:#ccc;
+ flex-grow:1;
+ height:60px;
+ display:flex;
+ cursor:pointer;
+ justify-content:center;
+ align-items:center;
+ text-transform:uppercase;
+ width:200px;
+ position:relative;
+ z-index:5;
+}
+.menu__button:hover {
+  background:#4c4c4c;
+}
+.menu__button.button--active {
+  background:#666;
+  color:#fff;
+}
+.menu__button.button--active:after {
+  position:absolute;
+  content:'';
+  bottom:-8px;
+  left:0;
+  right:0;
+  margin-left:auto;
+  margin-right:auto;
+  height:0px;
+  width:0px;
+  border-top:10px solid #666;
+  border-left:12px solid transparent;
+  border-right:12px solid transparent;
+}
+.stats-element {
+  width:100%;
+  min-height:400px;
+  position:relative;
+  display:flex;
+  padding:25px 50px 25px 50px;
+  box-sizing:border-box;
+}
+.stats-element__background {
+  position:absolute;
+  top:0;
+  left:0;
+  -webkit-filter: grayscale(100%);
+  opacity:0.2;
+  z-index:1;
+  height:100%;
+  width:100%;
+  background-position:center center;
+  background-size:cover;
+}
+.stats-element__game-logo {
+  height:300px;
+  margin-top:20px;
+  box-shadow:0 0 15px 0 rgba(0,0,0,0.3);
+}
+.stats-element__game-logo img {
+  height:100%;
+  position:relative;
+  z-index:3;
+  opacity:0.8;
+}
+
+.stats-element__content-right {
+  display:flex;
+  flex-flow:column;
+  width:100%;
+  margin-top:25px;
+  height:100%;
+  box-sizing:border-box;
+  margin-bottom:25px;
+  padding-left:25px;
+}
+.stats-element__game-name {
+  font-size:1.5rem;
+  font-weight:600;
+  text-transform:uppercase;
+
+}
+.stats-element__gradient-overlay {
+  background:linear-gradient(transparent 60%,#f0f0f0);
+  height:100%;
+  width:100%;
+  top:0;
+  left:0;
+  position:absolute;
+  z-index:2;
+}
+.stats-element__key-metrics {
+  color:#333;
+  display:flex;
+  justify-content:space-between;
+  width:100%;
+}
+.stats-element__chart {
+  height:100%;
+  background:rgba(0,0,0,0.1);
+  margin-bottom:60px;
+  margin-top:30px;
+  margin-left:-25px;
+  padding-left:25px;
+  padding-top:15px;
+  box-sizing:border-box;
+  padding-right:25px;
+  padding-bottom:10px;
+  width:calc(100% + 25px);
+  position:relative;
+  z-index:3;
+}
+.stats-element__matches {
+  overflow:auto;
+  margin-top:15px;
+  padding-right:15px;
+  position:relative;
+  z-index:3;
+  max-height:700px;
+}
+.stats-element__match-container {
+  display:flex;
+  flex-flow:column;
+  background:rgba(0,0,0,0.2);
+  position:relative;
+  z-index:3;
+  box-sizing:border-box;
+  margin-bottom:10px;
+  overflow:hidden;
+}
+.stats-element__match-players {
+  display:flex;
+  align-items:center;
+  background:rgba(0,0,0,0.5);
+  color:#ccc;
+  padding:5px;
+  width:98%;
+
+}
+.stats-element__match-details {
+  padding:5px;
+  display:flex;
+}
+.stats-element_match-versus {
+left: 10px;
+padding: 3px 10px 3px  10px;
+color: #fff;
+font-weight: 500;
+font-size: 1.2rem;
+top: 12px;
+}
+.stats-element__more-info-overlay {
+  position:absolute;
+  background:#333;
+  right:-45px;
+  top:-50px;
+  width:80px;
+  height:200%;
+  z-index:10;
+  transform:rotate(-45deg);
+  transition:all .3s ease;
+  cursor:pointer;
+}
+.stats-element__more-info-overlay:hover {
+  background:#1b1b1b;
+  transition:all .3s ease;
+}
+.stats-element__more-info-overlay:after {
+  content:'+';
+  color:#eee;
+  position:absolute;
+  top:30px;
+  left:-10px;
+  font-size:1.2rem;
+  transform:rotate(45deg);
+  bottom:0;
+  margin:auto;
+  font-weight:600;
+}
+.stats-element__date {
+  margin-left:auto;
+  margin-right:25px;
+  color:#444;
+}
+/* transitions */
+.from-left-transition {
+  transition: all .8s ease;
+  transform:translateX(0px);
+  opacity:1;
+}
+.from-left-enter {
+  opacity:0;
+  transform:translateX(-10px);
+}
+.from-left-leave {
+  display:none;
+}
+.from-top-transition {
+  transition: all .8s ease;
+  transform:translateY(0px);
+  opacity:1;
+}
+.from-top-enter {
+  opacity:0;
+  transform:translateY(-5px);
+}
+.from-top-leave {
+  display:none;
+}
