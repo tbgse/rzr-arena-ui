@@ -1,7 +1,18 @@
 var vm;
 var name = 'travis.howle';
-
+var test = [];
 loadData(name)
+
+Vue.component('performance-graph', {
+  // declare the props
+  props: ['game','index'],
+  // the prop can be used inside templates, and will also
+  // be set as `this.msg`
+  template: '<div><canvas :id="\'chart-\'+index"></canvas></div>',
+  ready:function(){
+    loadGraph(this.game,this.index);
+  }
+})
 function loadData(name){
 $.ajax({
   url:'https://client.arena.razerzone.com/API/Player/'+name+'/',
@@ -16,7 +27,6 @@ $.ajax({
       id:data.Response.EntityId,
       userName:data.Response.DisplayName,
       firstName:data.Response.FirstName,
-      lastName:data.Response.LastName,
       memberSince:d.toDateString(),
       lastOnline:data.Response.LastActivityDateTime,
       profile:data.Response.Profile,
@@ -24,18 +34,51 @@ $.ajax({
       stats:data.Response.Statistics,
       games:includeWinner(data.Response.Games,data.Response.EntityId,data.Response.Teams),
       teams:data.Response.Teams
+    },
+    methods: {
+      loadPlayer: function(player){
+        $.ajax({
+          url:'https://client.arena.razerzone.com/API/Player/'+player+'/',
+          method:'GET'
+        }).done(function(data){
+          $('body').scrollTop(0);
+          d = new Date(Date.parse(data.Response.CreatedDateTime));
+        vm.view = 'statistics';
+        vm.userName = data.Response.DisplayName;
+        vm.firstName = data.Response.firstName;
+        vm.memberSince = d.toDateString();
+        vm.avatar = data.Response.LogoUrl;
+        vm.stats = data.Response.Statistics;
+        vm.lastOnline = data.Response.LastActivityDateTime;
+        vm.teams = data.Response.Teams;
+        vm.games = includeWinner(data.Response.Games,data.Response.EntityId,data.Response.Teams);
+
+
+
+        $('.button--active').removeClass('button--active');
+        $('.menu__button:first-child').addClass('button--active');
+
+        });
+      }
+    },
+    ready: function(){
+
     }
   })
 
-  //creating charts
-  for (var i = 0; i<data.Response.Games.length;i++){
-    var dataSet = [data.Response.Games[i].Statistics.WonCount,data.Response.Games[i].Statistics.ForfeitedWonCount,data.Response.Games[i].Statistics.TieCount,data.Response.Games[i].Statistics.LostCount,data.Response.Games[i].Statistics.ForfeitedLostCount];
+document.getElementById('window').style.display = 'flex';
+})
+}
+
+function loadGraph(game,id) {
+    var dataSet = [game.Statistics.WonCount,game.Statistics.ForfeitedWonCount,game.Statistics.TieCount,game.Statistics.LostCount,game.Statistics.ForfeitedLostCount];
+    console.log(dataSet);
     var config = {
         type: 'HorizontalBar',
         data: {
             labels: ["Wins", "Forfeited Wins", "Tie", "Loss", "Forfeited Loss"],
             datasets: [{
-                label: data.Response.Games[i].GameName,
+                label: game.GameName,
                 backgroundColor: ["rgba(115,187,0,0.8)","rgba(115,187,0,0.8)","rgba(115,187,0,0.8)","rgba(154,58,34,0.8)","rgba(154,58,34,0.8)"],
                 hoverBackgroundColor: "rgba(255,99,132,0.5)",
                 hoverBorderColor: "rgba(255,99,132,1)",
@@ -52,11 +95,12 @@ $.ajax({
           }
         }
     };
-    var ctx = document.getElementById("chart-"+i).getContext("2d");
-    test = new Chart(ctx, config);
-  }
-})
+      var ctx = document.getElementById('chart-'+id).getContext("2d");
+      var test = new Chart(ctx, config);
+      test.update();
+      test.render(2500,false);
 }
+
 // vue filter to identify invalid user images (null,undefined) and return a placeholder instead
 Vue.filter('validateImage',function(src){
   if (src === undefined) return src;
@@ -94,10 +138,7 @@ function includeWinner(games,id,teams){
         else if (games[i].Matches[j].EntityParticipantA.Score === games[i].Matches[j].EntityParticipantB.Score) {
           games[i].Matches[j].WinStatus = 2;
         }
-        else {
-          console.log('else fired')
 
-        }
     }
   }
   return games;

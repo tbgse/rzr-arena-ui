@@ -11,7 +11,7 @@
   </head>
   <body id='app'>
     <div class='container'>
-      <div class='window'>
+      <div class='window' id='window' style='display:none'>
       <div class='top-info'>
         <div class='background-field'></div>
       <div class='user-image'v-bind:style="{ backgroundImage: 'url(' + avatar + ')' }"></div>
@@ -37,8 +37,17 @@
         <div class='menu__button'>Schedule</div>
 
       </div>
-      <div class='content' id='content'>
-      <div class='stats-element' v-for='game in games' v-show='view === "statistics" || view === "match history"'  transition="enter-stagger" stagger="100">
+      <div class='content__teams' v-if='view === "teams"' transition='from-left'>
+        <div class='team-element' v-for='team in teams'>
+           <div class='team-element__team-image' v-bind:style="{ backgroundImage: 'url(' + team.LogoUrl + ')' }"></div>
+           <div class='team-element__text-container'>
+             <div class='team-element__team-name'>{{team.DisplayName}}</div>
+             <div class='team-element__team-description'>{{team.TeamDescription}}</div>
+           </div>
+      </div>
+    </div>
+      <div class='content' id='content' v-if='view === "statistics" || view === "match history"'transition='from-left'>
+      <div class='stats-element'  v-for='game in games'  transition="enter-stagger" stagger="100">
         <div class='stats-element__gradient-overlay'></div>
         <div class='stats-element__background' v-bind:style="{ backgroundImage: 'url(' + game.GameBackgroundUrl + ')' }"></div>
         <div class='stats-element__game-logo'><img :src="game.GameImageLargeUrl" /></div>
@@ -50,12 +59,12 @@
             <div class='stats-element__more-info-overlay'></div>
             <div class='stats-element__status-bar' :class='{"status-bar--win" : match.WinStatus === 1, "status-bar--lost": match.WinStatus === 0, "status-bar--tie": match.WinStatus === 2}'></div>
             <div class='stats-element__match-players'>
-              <div class='player-container'>
+              <div class='player-container' v-on:click="loadPlayer(match.EntityParticipantA.Profile.EntityName)">
                   <div class='player-icon-small' v-bind:style="{ backgroundImage: 'url(' + match.EntityParticipantA.Profile.LogoUrl + ')' } | validateImage"></div>
             <div>{{match.EntityParticipantA.Profile.Nickname}}</div>
           </div>
                         <div class='stats-element_match-versus'>&nbsp;vs&nbsp;</div>
-                        <div class='player-container'>
+                        <div class='player-container' v-on:click="loadPlayer(match.EntityParticipantB.Profile.EntityName)">
                         <div class='player-icon-small' v-bind:style="{ backgroundImage: 'url(' + match.EntityParticipantB.Profile.LogoUrl + ')'} | validateImage"></div>
                         <div>{{match.EntityParticipantB.Profile.Nickname}}</div>
                       </div>
@@ -65,18 +74,18 @@
             <div class='stats-element__win-status green' v-show='match.WinStatus === 1'>Won</div>
             <div class='stats-element__win-status red' v-show='match.WinStatus === 0'>Lost</div>
             <div class='stats-element__win-status yellow'v-show='match.WinStatus === 2'>Tie</div>
-
-            <div>Map: {{match.GameTitleMapProperName}}</div>
-            <div>{{match.EntityParticipantA.Score}}</div>
-            <div>{{match.EntityParticipantB.Score}}</div>
+            <div class='stats-element__score'>
+              Score:&nbsp;
+              <span class='bold'>{{match.EntityParticipantA.Score}}:{{match.EntityParticipantB.Score}}</span>
+            </div>
+            <div>Map: <span class='bold'>{{match.GameTitleMapProperName}}</span></div>
             <div class='stats-element__date'>{{match.MatchCompleteDateTime | friendlyTime}}</div>
 
           </div>
           </div>
           </div>
-        <div class='stats-element__chart' v-show='view === "statistics"' transition='from-left'>
-        <canvas :id="'chart-'+$index"></canvas>
-      </div>
+        <performance-graph class='stats-element__chart' v-show='view === "statistics"' transition='from-left' :game='game' :index='$index'>
+      </performance-graph>
     </div>
       </div>
     </div>
