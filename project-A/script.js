@@ -14,8 +14,8 @@ Vue.component('performance-graph', {
           labels: ["Wins", "Forfeited Wins", "Ties", "Losses", "Forfeited Losses"],
           datasets: [{
             label: "",
-            backgroundColor: ["rgba(115,187,0,0.8)", "rgba(115,187,0,0.8)", "rgba(115,187,0,0.8)", "rgba(154,58,34,0.8)", "rgba(154,58,34,0.8)"],
-            hoverBackgroundColor: ["rgba(115,207,0,1)", "rgba(115,207,0,1)", "rgba(115,187,0,1)", "rgba(184,58,34,1)", "rgba(184,58,34,1)"],
+            backgroundColor: ["rgba(115,187,0,0.8)", "rgba(115,187,0,0.8)", "rgba(232,186,46,0.8)", "rgba(154,58,34,0.8)", "rgba(154,58,34,0.8)"],
+            hoverBackgroundColor: ["rgba(115,207,0,1)", "rgba(115,207,0,1)", "rgba(255,186,46,1)", "rgba(184,58,34,1)", "rgba(184,58,34,1)"],
 
             data: dataSet,
           }]
