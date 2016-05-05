@@ -1,33 +1,36 @@
 <!DOCTYPE html>
 <html>
-  <head>
 
-    <link rel='stylesheet' type='text/css' href='http://assets.razerzone.com/eeimages/assets/css/razerf5/razerf5.css' />
-    <link rel='stylesheet' type='text/css' href='style.css' />
-    <link rel='stylesheet' type='text/css' href='normalize.css' />
-    <script src='vue.js'></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+<head>
 
-  </head>
-  <body id='app'>
-    <div class='container'>
-      <div class='window' id='window' style='display:none'>
+  <link rel='stylesheet' type='text/css' href='style.css' />
+  <link rel='stylesheet' type='text/css' href='normalize.css' />
+  <script src='vue.js'></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+
+</head>
+
+<body id='app'>
+  <div class='container'>
+    <div class='window' id='window' style='display:none'>
       <div class='top-info'>
         <div class='background-field'></div>
-      <div class='user-image'v-bind:style="{ backgroundImage: 'url(' + avatar + ')' }"></div>
-      <div class='user-details'>
-        <div class='user-details__username'>{{firstName}}</div>
-        <div class='user-details__username-main'>{{userName}}</div>
-        <div class='user-details__teams'>Playing at <span v-for='team in teams'><a href='#' >{{team.DisplayName}}</a><span v-if='$index < teams.length-1'>,&nbsp;</span></span></div>
-        <div>United States</div>
-        <div>Arena Member since {{memberSince}}</div>
-        <div>Last Online&nbsp;{{lastOnline | friendlyTime}}</div>
-        <div class='top-info__game-list'>
-          <div class='top-info__game' v-for="game in games">
-            <div class='top-info__game-logo'><img :src='game.GameImageSmallUrl'/></div>
+        <div class='user-image' v-bind:class='{"user-image--online" : isOnline === true}' v-bind:style="{ backgroundImage: 'url(' + avatar + ')' }"></div>
+        <div class='user-details'>
+          <div class='user-details__username'>{{firstName}}</div>
+          <div class='user-details__username-main'>{{userName}}</div>
+          <div class='user-details__teams'>Playing at <span v-for='team in teams'><a href='#' >{{team.DisplayName}}</a><span v-if='$index < teams.length-1'>,&nbsp;</span></span>
+          </div>
+          <div>United States</div>
+          <div>Arena Member since {{memberSince}}</div>
+          <div v-if='isOnline === true' class='green'>Online now!</div>
+          <div v-else>Last Online&nbsp;{{lastOnline | friendlyTime}}</div>
+          <div class='top-info__game-list'>
+            <div class='top-info__game' v-for="n in 4">
+              <div class='top-info__game-logo' v-if='games[n].GameImageSmallUrl'><img :src='games[n].GameImageSmallUrl' /></div>
+            </div>
           </div>
         </div>
-      </div>
 
       </div>
       <div class='menu'>
@@ -35,81 +38,87 @@
         <div class='menu__button'>Match History</div>
         <div class='menu__button'>Teams</div>
         <div class='menu__button'>Schedule</div>
-
       </div>
-      <div class='content__teams' v-if='view === "teams"' transition='from-left'>
-        <div class='team-element' v-for='team in teams' >
+      <div class='content__schedule' v-if='view === "schedule"' transition='from-top'>No schedule is currently available.</div>
+      <div class='content__teams' v-if='view === "teams"' transition='from-top'>
+        <div class='team-element' v-for='team in teams'>
           <div class='background-overlay' v-bind:style="{ backgroundImage: 'url(' + team.LogoUrl + ')' } | validateImage"></div>
           <div class='team-element__left-container'>
-           <div class='team-element__team-image' v-bind:style="{ backgroundImage: 'url(' + team.LogoUrl + ')' } | validateImage"></div>
-           <div class='team-element__team-description'>{{team.TeamDescription}}</div>
-           <div class='game-logo__menu'>
-             <a class='game-logo__menu-element'>View Team Profile</a>
-             <a class='game-logo__menu-element'>Become a Member</a>
-             <a class='game-logo__menu-element'>Challenge This Team</a>
-           </div>
-         </div>
-           <div class='team-element__text-container'>
-             <div class='team-element__team-name'>{{team.DisplayName}}</div>
-                     <div class='stats-element__key-metrics'><span>Founded: <span class='bold'>{{team.CreatedDateTime | friendlyTime}}</span></span><span>Members: <span class='bold'>{{team.NumberOfPlayers}}</span></span><span>Total Matches Played: <span class='bold'>{{team.Statistics.MatchesPlayedCount}}</span></span></div>
-             <performance-graph class='stats-element__chart' transition='from-left' :stats='team.Statistics' :index='$index' :type='"team"'>
-           </performance-graph>
-           </div>
-      </div>
-    </div>
-      <div class='content' id='content' v-if='view === "statistics" || view === "match history"'transition='from-left'>
-      <div class='stats-element'  v-for='game in games'  transition="enter-stagger" stagger="100">
-        <div class='stats-element__gradient-overlay'></div>
-        <div class='stats-element__background' v-bind:style="{ backgroundImage: 'url(' + game.GameBackgroundUrl + ')' }"></div>
-        <div class='stats-element__game-logo' v-bind:style="{ backgroundImage: 'url(' + game.GameImageLargeUrl + ')' }">
-        <div class='game-logo__menu'>
-          <a class='game-logo__menu-element'>View Tournaments</a>
-          <a class='game-logo__menu-element' v-bind:href='game.GameWebsite' target='_blank'>Visit Official Website</a>
-          <a class='game-logo__menu-element'>Buy on Razer Cortex</a>
-        </div>
-        </div>
-        <div class='stats-element__content-right'>
-        <div class='stats-element__game-name'>{{game.GameName}}</div>
-        <div class='stats-element__key-metrics'><span>Total Matches Played: <span class='bold'>{{game.Statistics.MatchesPlayedCount}}</span></span><span>Current Win Streak: <span class='bold'>{{game.Statistics.WinStreak}}</span></span><span>Current Loss Streak: <span class='bold'>{{game.Statistics.LossStreak}}</span></span></div>
-        <div class='stats-element__matches' v-show='view === "match history"' transition='from-top' >
-          <div class='stats-element__match-container' v-for='match in game.Matches'>
-            <div class='stats-element__more-info-overlay'></div>
-            <div class='stats-element__status-bar' :class='{"status-bar--win" : match.WinStatus === 1, "status-bar--lost": match.WinStatus === 0, "status-bar--tie": match.WinStatus === 2}'></div>
-            <div class='stats-element__match-players'>
-              <div class='player-container' v-on:click="loadPlayer(match.EntityParticipantA.Profile.EntityName)">
-                  <div class='player-icon-small' v-bind:style="{ backgroundImage: 'url(' + match.EntityParticipantA.Profile.LogoUrl + ')' } | validateImage"></div>
-            <div>{{match.EntityParticipantA.Profile.Nickname}}</div>
-          </div>
-                        <div class='stats-element_match-versus'>&nbsp;vs&nbsp;</div>
-                        <div class='player-container' v-on:click="loadPlayer(match.EntityParticipantB.Profile.EntityName)">
-                        <div class='player-icon-small' v-bind:style="{ backgroundImage: 'url(' + match.EntityParticipantB.Profile.LogoUrl + ')'} | validateImage"></div>
-                        <div>{{match.EntityParticipantB.Profile.Nickname}}</div>
-                      </div>
-          </div>
-
-          <div class='stats-element__match-details'>
-            <div class='stats-element__win-status green' v-show='match.WinStatus === 1'>Won</div>
-            <div class='stats-element__win-status red' v-show='match.WinStatus === 0'>Lost</div>
-            <div class='stats-element__win-status yellow'v-show='match.WinStatus === 2'>Tie</div>
-            <div class='stats-element__score'>
-              Score:&nbsp;
-              <span class='bold'>{{match.EntityParticipantA.Score}}:{{match.EntityParticipantB.Score}}</span>
+            <div class='team-element__team-image' v-bind:style="{ backgroundImage: 'url(' + team.LogoUrl + ')' } | validateImage"></div>
+            <div class='team-element__team-description'>{{team.TeamDescription | includeTeamPlaceholder}}</div>
+            <div class='game-logo__menu'>
+              <a class='game-logo__menu-element'>View Team Profile</a>
+              <a class='game-logo__menu-element'>Become a Member</a>
+              <a class='game-logo__menu-element'>Challenge This Team</a>
             </div>
-            <div>Map: <span class='bold'>{{match.GameTitleMapProperName}}</span></div>
-            <div class='stats-element__date'>{{match.MatchCompleteDateTime | friendlyTime}}</div>
+          </div>
+          <div class='team-element__text-container'>
+            <div class='team-element__team-name'>{{team.DisplayName}}</div>
+            <div class='stats-element__key-metrics'><span>Founded: <span class='bold'>{{team.CreatedDateTime | friendlyTime}}</span></span><span>Members: <span class='bold'>{{team.NumberOfPlayers}}</span></span><span>Total Matches Played: <span class='bold'>{{team.Statistics.MatchesPlayedCount}}</span></span>
+            </div>
+            <performance-graph class='stats-element__chart' transition='from-left' :stats='team.Statistics' :index='$index' :type='"team"' v-if='team.Statistics.MatchesPlayedCount > 0'>
+            </performance-graph>
+            <div class='data-placeholder' v-else>No matches have been recorded yet. Come back later.</div>
+          </div>
+        </div>
+      </div>
+      <div class='content' id='content' v-if='view === "statistics" || view === "match history"' transition='from-top'>
+        <div class='stats-element' v-for='game in games'>
+          <div class='stats-element__gradient-overlay'></div>
+          <div class='stats-element__background' v-bind:style="{ backgroundImage: 'url(' + game.GameBackgroundUrl + ')' }"></div>
+          <div class='stats-element__game-logo' v-bind:style="{ backgroundImage: 'url(' + game.GameImageLargeUrl + ')' }">
+            <div class='game-logo__menu'>
+              <a class='game-logo__menu-element'>View Tournaments</a>
+              <a class='game-logo__menu-element' v-bind:href='game.GameWebsite' target='_blank'>Visit Official Website</a>
+              <a class='game-logo__menu-element'>Buy on Razer Cortex</a>
+            </div>
+          </div>
+          <div class='stats-element__content-right'>
+            <div class='stats-element__game-name'>{{game.GameName}}</div>
+            <div class='stats-element__key-metrics'><span>Total Matches Played: <span class='bold'>{{game.Statistics.MatchesPlayedCount}}</span></span><span>Current Win Streak: <span class='bold'>{{game.Statistics.WinStreak}}</span></span><span>Current Loss Streak: <span class='bold'>{{game.Statistics.LossStreak}}</span></span>
+            </div>
+            <div class='stats-element__matches' v-if='view === "match history"' transition='from-top'>
+              <div class='stats-element__match-container' v-for='match in game.Matches'>
+                <div class='stats-element__more-info-overlay'></div>
+                <div class='stats-element__status-bar' :class='{"status-bar--win" : match.WinStatus === 1, "status-bar--lost": match.WinStatus === 0, "status-bar--tie": match.WinStatus === 2}'></div>
+                <div class='stats-element__match-players'>
+                  <div class='player-container' v-on:click="loadPlayer(match.EntityParticipantA.Profile.EntityName)">
+                    <div class='player-icon-small' v-bind:style="{ backgroundImage: 'url(' + match.EntityParticipantA.Profile.LogoUrl + ')' } | validateImage"></div>
+                    <div>{{match.EntityParticipantA.Profile.Nickname}}</div>
+                  </div>
+                  <div class='stats-element_match-versus'>&nbsp;vs&nbsp;</div>
+                  <div class='player-container' v-on:click="loadPlayer(match.EntityParticipantB.Profile.EntityName)">
+                    <div class='player-icon-small' v-bind:style="{ backgroundImage: 'url(' + match.EntityParticipantB.Profile.LogoUrl + ')'} | validateImage"></div>
+                    <div>{{match.EntityParticipantB.Profile.Nickname}}</div>
+                  </div>
+                </div>
 
+                <div class='stats-element__match-details'>
+                  <div class='stats-element__win-status green' v-show='match.WinStatus === 1'>Won</div>
+                  <div class='stats-element__win-status red' v-show='match.WinStatus === 0'>Lost</div>
+                  <div class='stats-element__win-status yellow' v-show='match.WinStatus === 2'>Tie</div>
+                  <div class='stats-element__score'>
+                    Score:&nbsp;
+                    <span class='bold'>{{match.EntityParticipantA.Score}}:{{match.EntityParticipantB.Score}}</span>
+                  </div>
+                  <div>Map: <span class='bold'>{{match.GameTitleMapProperName}}</span></div>
+                  <div class='stats-element__date'>{{match.MatchCompleteDateTime | friendlyTime}}</div>
+
+                </div>
+              </div>
+              <div class='data-placeholder' v-if='game.Matches.length === 0'>No matches have been recorded yet. Come back later.</div>
+            </div>
+            <performance-graph class='stats-element__chart' v-if='view === "statistics" && game.Statistics.MatchesPlayedCount > 0' transition='from-left' :stats='game.Statistics' :index='$index' :type="game">
+            </performance-graph>
+            <div class='data-placeholder' v-if='view === "statistics" && game.Statistics.MatchesPlayedCount === 0'>No matches have been recorded yet. Come back later.</div>
           </div>
-          </div>
-          </div>
-        <performance-graph class='stats-element__chart' v-show='view === "statistics"' transition='from-left' :stats='game.Statistics' :index='$index' :type="game">
-      </performance-graph>
-    </div>
+        </div>
       </div>
     </div>
   </div>
-    </div>
-    <script src='chart.js'></script>
-    <script src='script.js'></script>
+  <script src='chart.js'></script>
+  <script src='script.js'></script>
 
-  </body>
+</body>
+
 </html>
