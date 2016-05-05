@@ -24,7 +24,6 @@ Vue.component('performance-graph', {
           tooltips: {
             callbacks: {
               title: function(tooltipItem, data) {
-                console.log(tooltipItem)
                 return '';
               },
               label: function(tooltipItem, data) {
@@ -73,7 +72,6 @@ var vm = new Vue({
       }).done(function(data) {
         $('body').scrollTop(0);
         d = new Date(Date.parse(data.Response.CreatedDateTime));
-        console.log(data.Response)
         vm.view = 'statistics';
         vm.id = data.Response.EnityId;
         vm.userName = data.Response.DisplayName;

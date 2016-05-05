@@ -75,7 +75,7 @@ a:hover {
   margin-top: 100px;
   margin-bottom: 100px;
   width: 920px;
-  display: none;
+  display: flex;
   background: #e5e5e5;
   box-shadow: 0 0 25px 3px rgba(0, 0, 0, 0.3);
   -webkit-flex-flow: column;
@@ -449,7 +449,6 @@ a:hover {
           flex-flow: column;
   width: 80%;
   margin-top: 25px;
-  height: 100%;
   box-sizing: border-box;
   margin-bottom: 25px;
   padding-left: 25px;
@@ -483,10 +482,10 @@ a:hover {
   width: 100%;
 }
 .stats-element__chart {
-  height: 100%;
   background: rgba(0, 0, 0, 0.1);
   margin-bottom: 60px;
   margin-top: 30px;
+  min-height:160px;
   margin-left: -25px;
   padding-left: 25px;
   padding-top: 15px;
@@ -496,6 +495,9 @@ a:hover {
   width: calc(100% + 25px);
   position: relative;
   z-index: 3;
+}
+canvas {
+  min-height:160px !important;
 }
 .stats-element__matches {
   overflow: auto;
