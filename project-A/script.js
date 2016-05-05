@@ -1,39 +1,57 @@
-var vm;
-var name = 'travis.howle';
-var test = [];
-loadData(name)
-
+//registering components
 Vue.component('performance-graph', {
-  // declare the props
-  props: ['game','index'],
-  // the prop can be used inside templates, and will also
-  // be set as `this.msg`
-  template: '<div><canvas :id="\'chart-\'+index"></canvas></div>',
+  props: ['stats','index','type'],
+  template: '<div><canvas :id="\'chart-\'+type+index"></canvas></div>',
   ready:function(){
-    loadGraph(this.game,this.index);
+    this.loadGraph(this.stats,this.index,this.type);
+  },
+  methods: {
+    loadGraph: function(stats,id,type){
+      var dataSet = [stats.WonCount,stats.ForfeitedWonCount,stats.TieCount,stats.LostCount,stats.ForfeitedLostCount];
+      var config = {
+          type: 'HorizontalBar',
+          data: {
+              labels: ["Wins", "Forfeited Wins", "Tie", "Loss", "Forfeited Loss"],
+              datasets: [{
+                  label: "abc",
+                  backgroundColor: ["rgba(115,187,0,0.8)","rgba(115,187,0,0.8)","rgba(115,187,0,0.8)","rgba(154,58,34,0.8)","rgba(154,58,34,0.8)"],
+                  hoverBackgroundColor:  ["rgba(115,207,0,1)","rgba(115,207,0,1)","rgba(115,187,0,1)","rgba(184,58,34,1)","rgba(184,58,34,1)"],
+
+                  data: dataSet,
+              }]
+          },
+          options: {
+            scales: {
+              yAxes: [{
+                gridLines: {
+                  display:false
+                }
+              }]
+            }
+          }
+      };
+        var ctx = document.getElementById('chart-'+type+id).getContext("2d");
+        new Chart(ctx, config);
+    }
   }
 })
-function loadData(name){
-$.ajax({
-  url:'https://client.arena.razerzone.com/API/Player/'+name+'/',
-  method:'GET'
-}).done(function(data){
-  console.log(data.Response)
-  var d = new Date(Date.parse(data.Response.CreatedDateTime));
-  vm = new Vue({
+
+//initializing Vue instance
+var vm = new Vue({
     el:'#app',
     data: {
       view:'statistics',
-      id:data.Response.EntityId,
-      userName:data.Response.DisplayName,
-      firstName:data.Response.FirstName,
-      memberSince:d.toDateString(),
-      lastOnline:data.Response.LastActivityDateTime,
-      profile:data.Response.Profile,
-      avatar:data.Response.LogoUrl,
-      stats:data.Response.Statistics,
-      games:includeWinner(data.Response.Games,data.Response.EntityId,data.Response.Teams),
-      teams:data.Response.Teams
+      id:'',
+      userName:'',
+      firstName:'',
+      memberSince:'',
+      isActive:'',
+      lastOnline:'',
+      profile:'',
+      avatar:'',
+      stats:'',
+      games:'',
+      teams:''
     },
     methods: {
       loadPlayer: function(player){
@@ -44,64 +62,63 @@ $.ajax({
           $('body').scrollTop(0);
           d = new Date(Date.parse(data.Response.CreatedDateTime));
         vm.view = 'statistics';
+        vm.id = data.Response.EnityId;
         vm.userName = data.Response.DisplayName;
         vm.firstName = data.Response.firstName;
-        vm.memberSince = d.toDateString();
+        vm.memberSince = d.toLocaleDateString();
         vm.avatar = data.Response.LogoUrl;
+        vm.isActive = data.Response.isActive;
         vm.stats = data.Response.Statistics;
+        vm.profile = data.Response.Profile;
         vm.lastOnline = data.Response.LastActivityDateTime;
         vm.teams = data.Response.Teams;
         vm.games = includeWinner(data.Response.Games,data.Response.EntityId,data.Response.Teams);
-
-
-
         $('.button--active').removeClass('button--active');
         $('.menu__button:first-child').addClass('button--active');
-
         });
+      },
+      includeWinner: function(games,id,teams){
+        for (var i = 0; i<games.length;i++){
+          for (var j = 0; j<games[i].Matches.length;j++){
+              games[i].Matches[j].WinStatus = 0;
+              if (games[i].Matches[j].EntityParticipantA.Score > games[i].Matches[j].EntityParticipantB.Score) {
+                teams.forEach(function(x){
+                  if (x.EntityId === games[i].Matches[j].EntityParticipantA.Id) {
+                    games[i].Matches[j].WinStatus = 1;
+                  }
+                })
+                if (id === games[i].Matches[j].EntityParticipantA.Id) {
+                    games[i].Matches[j].WinStatus = 1;
+                }
+              }
+              else if(games[i].Matches[j].EntityParticipantA.Score < games[i].Matches[j].EntityParticipantB.Score) {
+                teams.forEach(function(x){
+                  if (x.EntityId === games[i].Matches[j].EntityParticipantB.Id) {
+                    games[i].Matches[j].WinStatus = 1;
+                  }
+                })
+                if (id === games[i].Matches[j].EntityParticipantB.Id) {
+                    games[i].Matches[j].WinStatus = 1;
+                }
+              }
+              else if (games[i].Matches[j].EntityParticipantA.Score === games[i].Matches[j].EntityParticipantB.Score) {
+                games[i].Matches[j].WinStatus = 2;
+              }
+
+          }
+        }
+        return games;
       }
+
     },
     ready: function(){
+      this.loadPlayer('travis.howle');
+      document.getElementById('window').style.display = 'flex';
 
     }
   })
 
-document.getElementById('window').style.display = 'flex';
-})
-}
-
-function loadGraph(game,id) {
-    var dataSet = [game.Statistics.WonCount,game.Statistics.ForfeitedWonCount,game.Statistics.TieCount,game.Statistics.LostCount,game.Statistics.ForfeitedLostCount];
-    console.log(dataSet);
-    var config = {
-        type: 'HorizontalBar',
-        data: {
-            labels: ["Wins", "Forfeited Wins", "Tie", "Loss", "Forfeited Loss"],
-            datasets: [{
-                label: game.GameName,
-                backgroundColor: ["rgba(115,187,0,0.8)","rgba(115,187,0,0.8)","rgba(115,187,0,0.8)","rgba(154,58,34,0.8)","rgba(154,58,34,0.8)"],
-                hoverBackgroundColor: "rgba(255,99,132,0.5)",
-                hoverBorderColor: "rgba(255,99,132,1)",
-                data: dataSet,
-            }]
-        },
-        options: {
-          scales: {
-            yAxes: [{
-              gridLines: {
-                display:false
-              }
-            }]
-          }
-        }
-    };
-      var ctx = document.getElementById('chart-'+id).getContext("2d");
-      var test = new Chart(ctx, config);
-      test.update();
-      test.render(2500,false);
-}
-
-// vue filter to identify invalid user images (null,undefined) and return a placeholder instead
+//filter to identify invalid user images (null,undefined) and return a placeholder instead
 Vue.filter('validateImage',function(src){
   if (src === undefined) return src;
   if (src.backgroundImage === 'url(null)' || src === 'url(undefined)') {
@@ -109,40 +126,7 @@ Vue.filter('validateImage',function(src){
   }
   return src;
 })
-//determine won / lost matches by matching entities
-function includeWinner(games,id,teams){
-  for (var i = 0; i<games.length;i++){
-    for (var j = 0; j<games[i].Matches.length;j++){
-        games[i].Matches[j].WinStatus = 0;
-        if (games[i].Matches[j].EntityParticipantA.Score > games[i].Matches[j].EntityParticipantB.Score) {
-          teams.forEach(function(x){
-            if (x.EntityId === games[i].Matches[j].EntityParticipantA.Id) {
-              games[i].Matches[j].WinStatus = 1;
-              console.log(games[i].Matches[j].EntityParticipantA.Profile.Nickname)
-            }
-          })
-          if (id === games[i].Matches[j].EntityParticipantA.Id) {
-              games[i].Matches[j].WinStatus = 1;
-          }
-        }
-        else if(games[i].Matches[j].EntityParticipantA.Score < games[i].Matches[j].EntityParticipantB.Score) {
-          teams.forEach(function(x){
-            if (x.EntityId === games[i].Matches[j].EntityParticipantB.Id) {
-              games[i].Matches[j].WinStatus = 1;
-            }
-          })
-          if (id === games[i].Matches[j].EntityParticipantB.Id) {
-              games[i].Matches[j].WinStatus = 1;
-          }
-        }
-        else if (games[i].Matches[j].EntityParticipantA.Score === games[i].Matches[j].EntityParticipantB.Score) {
-          games[i].Matches[j].WinStatus = 2;
-        }
 
-    }
-  }
-  return games;
-}
 //vue filter to calculate the time since last activity and return a response string
 Vue.filter('friendlyTime',function(time){
   var d = new Date;
@@ -154,9 +138,14 @@ Vue.filter('friendlyTime',function(time){
   var totalHours = Math.floor(totalMinutes/60);
   var hoursElapsed = totalHours%24;
   var totalDays = Math.floor(totalHours/24);
+  console.log('total days are '+totalDays)
   var daysElapsed = totalDays%24;
-  if (daysElapsed > 1) {
-    return daysElapsed +" days ago.";
+  if (totalDays > 31) {
+    d = new Date(Date.parse(time));
+    return d.toLocaleDateString();
+  }
+  else if (daysElapsed > 1) {
+    return totalDays +" days ago.";
   }
   else if (daysElapsed === 1) {
     return daysElapsed +" day ago.";
@@ -177,12 +166,13 @@ Vue.filter('friendlyTime',function(time){
     return "a few seconds ago."
   }
 });
-//event listener buttons
+//event listener for menu buttons
 $('.menu__button').on('click',function(){
   $('.button--active').removeClass('button--active');
   $(this).toggleClass('button--active');
     vm.view = $(this).html().toLowerCase();
 })
+
 //default chartjs settings, adding vertical barchart options
 Chart.defaults.global.legend = false;
 Chart.defaults.global.defaultFontColor = "#333";

@@ -38,11 +38,18 @@
 
       </div>
       <div class='content__teams' v-if='view === "teams"' transition='from-left'>
-        <div class='team-element' v-for='team in teams'>
-           <div class='team-element__team-image' v-bind:style="{ backgroundImage: 'url(' + team.LogoUrl + ')' }"></div>
+        <div class='team-element' v-for='team in teams' >
+          <div class='background-overlay' v-bind:style="{ backgroundImage: 'url(' + team.LogoUrl + ')' } | validateImage"></div>
+          <div class='team-element__left-container'>
+           <div class='team-element__team-image' v-bind:style="{ backgroundImage: 'url(' + team.LogoUrl + ')' } | validateImage"></div>
+           <div class='team-element__team-description'>{{team.TeamDescription}}</div>
+
+         </div>
            <div class='team-element__text-container'>
              <div class='team-element__team-name'>{{team.DisplayName}}</div>
-             <div class='team-element__team-description'>{{team.TeamDescription}}</div>
+                     <div class='stats-element__key-metrics'><span>Founded: <span class='bold'>{{team.CreatedDateTime | friendlyTime}}</span></span><span>Members: <span class='bold'>{{team.NumberOfPlayers}}</span></span><span>Total Matches Played: <span class='bold'>{{team.Statistics.MatchesPlayedCount}}</span></span></div>
+             <performance-graph class='stats-element__chart' transition='from-left' :stats='team.Statistics' :index='$index' :type='"team"'>
+           </performance-graph>
            </div>
       </div>
     </div>
@@ -50,7 +57,13 @@
       <div class='stats-element'  v-for='game in games'  transition="enter-stagger" stagger="100">
         <div class='stats-element__gradient-overlay'></div>
         <div class='stats-element__background' v-bind:style="{ backgroundImage: 'url(' + game.GameBackgroundUrl + ')' }"></div>
-        <div class='stats-element__game-logo'><img :src="game.GameImageLargeUrl" /></div>
+        <div class='stats-element__game-logo' v-bind:style="{ backgroundImage: 'url(' + game.GameImageLargeUrl + ')' }">
+        <div class='game-logo__menu'>
+          <div class='game-logo__menu-element'>View Tournaments</div>
+          <div class='game-logo__menu-element'>Visit Official Website</div>
+          <div class='game-logo__menu-element'>Buy on Razer Cortex</div>
+        </div>
+        </div>
         <div class='stats-element__content-right'>
         <div class='stats-element__game-name'>{{game.GameName}}</div>
         <div class='stats-element__key-metrics'><span>Total Matches Played: <span class='bold'>{{game.Statistics.MatchesPlayedCount}}</span></span><span>Current Win Streak: <span class='bold'>{{game.Statistics.WinStreak}}</span></span><span>Current Loss Streak: <span class='bold'>{{game.Statistics.LossStreak}}</span></span></div>
@@ -84,7 +97,7 @@
           </div>
           </div>
           </div>
-        <performance-graph class='stats-element__chart' v-show='view === "statistics"' transition='from-left' :game='game' :index='$index'>
+        <performance-graph class='stats-element__chart' v-show='view === "statistics"' transition='from-left' :stats='game.Statistics' :index='$index' :type="game">
       </performance-graph>
     </div>
       </div>

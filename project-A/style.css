@@ -5,11 +5,25 @@ body {
   height:100%;
   font-family:"RazerF5";
 }
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background:rgba(0,0,0,0.2);
+}
+
+::-webkit-scrollbar-thumb {
+    background:rgba(0,0,0,0.3);
+}
 a {
   color:#ddd;
+  cursor:pointer;
+  transition:color .2s ease;
 }
 a:hover {
   color:#73BB00;
+  transition:color .2s ease;
 }
 .bold {
   font-weight:600;
@@ -140,6 +154,8 @@ a:hover {
 .user-details__username {
   font-size:1.5rem;
   font-weight:600;
+  letter-spacing:.05rem;
+
   color:#eee;
 }
 .user-details__username-main {
@@ -148,6 +164,8 @@ a:hover {
   font-size:2rem;
   color:#fff;
   line-height:.9em;
+  letter-spacing:.15rem;
+
 }
 .user-details__teams {
   font-size:1.1rem;
@@ -220,19 +238,70 @@ a:hover {
 .stats-element__game-logo {
   height:300px;
   margin-top:20px;
-  box-shadow:0 0 15px 0 rgba(0,0,0,0.3);
-}
-.stats-element__game-logo img {
-  height:100%;
+  box-shadow:0 0 25px 0 rgba(0,0,0,0.3);
+  opacity:0.8;
   position:relative;
   z-index:3;
-  opacity:0.8;
+  width:230px;
+  background-size:cover;
+  transition: all .3s ease;
+  cursor:pointer;
 }
 
+.stats-element__game-logo:hover {
+  transform:translateY(-5px);
+  box-shadow:0px 10px 30px 2px rgba(0,0,0,0.4);
+  transition: all .3s ease;
+}
+.stats-element__game-logo:hover > .game-logo__menu {
+  display:block;
+}
+.game-logo__menu {
+  position:absolute;
+  width:250px;
+  height:300px;
+  top:0;
+  left:-270px;
+  z-index:10;
+  margin-top:15px;
+  display:none;
+
+}
+.game-logo__menu-element {
+  background:#333;
+  height:50px;
+  width:100%;
+  display:flex;
+  align-items:center;
+  color:#ccc;
+  justify-content:center;
+  box-shadow:0 0 25px 0 rgba(0,0,0,0.3);
+
+  border-radius:20px;
+  margin-bottom:20px;
+  position:relative;
+  z-index:15;
+}
+.game-logo__menu-element:after {
+  content:'';
+  width:26px;
+  height:2px;
+  position:absolute;
+  right:-22px;
+  transform:rotate(30deg);
+  top:30px;
+  bottom:0;
+  background:#333;
+
+}
+.game-logo__menu-element:hover {
+  background:#111;
+  color:#fff;
+}
 .stats-element__content-right {
   display:flex;
   flex-flow:column;
-  width:100%;
+  width:80%;
   margin-top:25px;
   height:100%;
   box-sizing:border-box;
@@ -246,7 +315,7 @@ a:hover {
 
 }
 .stats-element__gradient-overlay {
-  background:linear-gradient(transparent 60%,#f0f0f0);
+  background:linear-gradient(transparent 60%,#e5e5e5);
   height:100%;
   width:100%;
   top:0;
@@ -293,6 +362,7 @@ a:hover {
   margin-bottom:15px;
   overflow:hidden;
 }
+
 .stats-element__match-players {
   display:flex;
   align-items:center;
@@ -394,24 +464,73 @@ top: 12px;
 /* team elements */
 .team-element {
   display:flex;
-  margin-left:25px;
-  margin-bottom:25px;
-  margin-top:25px;
+  padding-left:50px;
+  padding-bottom:25px;
+  padding-top:25px;
+  position:relative;
+  transition:all .3s ease;
+  background:linear-gradient(#ddd 40%,#f0f0f0);
+
 }
-.team-element__team-image {
-  height:150px;
-  width:150px;
+.background-overlay {
+  position:absolute;
+  height:100%;
+  width:100%;
+  top:0;
+  left:0;
   background-size:cover;
-  margin-right:15px;
+  background-repeat:no-repeat;
+  background-position:center;
+  opacity:0.1;
+  -webkit-filter:grayscale(100%) blur(8px);
+  z-index:1;
+}
+
+.team-element__team-image {
+  height:210px;
+  width:210px;
+  background-size:cover;
+  position:relative;
+  z-index:10;
+  cursor:pointer;
+}
+.team-element__left-container {
+  box-shadow:0 0 25px 0 rgba(0,0,0,0.3);
+  height:100%;
+  margin-top:20px;
+  position:relative;
+  z-index:2;
 }
 .team-element__text-container {
   display:flex;
   flex-flow:column;
-  width:80%;
+  margin-top:25px;
+  margin-bottom:10px;
+  width:70%;
+  box-sizing:border-box;
+  z-index:3;
+  margin-left:25px;
+  position:relative;
+
 }
+
 .team-element__team-name {
   font-size:1.5rem;
   letter-spacing:.1rem;
+  font-weight:600;
+  position:relative;
+  z-index:2;
+  color:#333;
+  box-sizing:border-box;
+}
+.team-element__team-description {
+  padding:10px;
+  box-sizing:border-box;
+  width:210px;
+  background:rgba(0,0,0,0.5);
+  color:#ccc;
+  height:100px;
+  overflow:auto;
 }
 /* transitions */
 .from-left-transition {
