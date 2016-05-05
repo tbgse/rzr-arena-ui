@@ -24,7 +24,7 @@
           <div>United States</div>
           <div>Arena Member since {{memberSince}}</div>
           <div v-if='isOnline === true' class='green'>Online now!</div>
-          <div v-else>Last Online&nbsp;{{lastOnline | friendlyTime}}</div>
+          <div v-if='isOnline === false'>Last Online&nbsp;{{lastOnline | friendlyTime}}</div>
           <div class='top-info__game-list'>
             <div class='top-info__game' v-for="n in 4">
               <div class='top-info__game-logo' v-if='games[n]'><img :src='games[n].GameImageSmallUrl' /></div>
