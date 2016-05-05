@@ -27,7 +27,7 @@
           <div v-else>Last Online&nbsp;{{lastOnline | friendlyTime}}</div>
           <div class='top-info__game-list'>
             <div class='top-info__game' v-for="n in 4">
-              <div class='top-info__game-logo' v-if='games[n].GameImageSmallUrl'><img :src='games[n].GameImageSmallUrl' /></div>
+              <div class='top-info__game-logo' v-if='games[n]'><img :src='games[n].GameImageSmallUrl' /></div>
             </div>
           </div>
         </div>
