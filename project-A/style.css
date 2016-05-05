@@ -2,7 +2,7 @@
 html,
 body {
   background:#999;
-  height:100%;
+  min-height:100%;
   font-family:"RazerF5";
 }
 ::-webkit-scrollbar {
@@ -20,6 +20,7 @@ a {
   color:#ddd;
   cursor:pointer;
   transition:color .2s ease;
+  text-decoration:none;
 }
 a:hover {
   color:#73BB00;
@@ -33,6 +34,7 @@ a:hover {
   width:100%;
   min-height:100%;
   justify-content:center;
+
 }
 .player-container {
   display:flex;
@@ -58,7 +60,7 @@ a:hover {
   margin-top:100px;
   margin-bottom:100px;
   width:920px;
-  display:flex;
+  display:none;
   background:#e5e5e5;
   box-shadow: 0 0 25px 3px rgba(0,0,0,0.3);
   flex-flow:column;
@@ -253,18 +255,54 @@ a:hover {
   box-shadow:0px 10px 30px 2px rgba(0,0,0,0.4);
   transition: all .3s ease;
 }
-.stats-element__game-logo:hover > .game-logo__menu {
-  display:block;
+.team-element__left-container:hover {
+  transform:translateY(-5px);
+  box-shadow:0px 10px 30px 2px rgba(0,0,0,0.4);
+  transition: all .3s ease;
+}
+.stats-element__game-logo:hover > .game-logo__menu .game-logo__menu-element{
+  animation: bounce .5s forwards;
+  visibility:visible;
+}
+.team-element__left-container:hover > .game-logo__menu .game-logo__menu-element{
+  animation: bounce .5s forwards;
+  visibility:visible;
 }
 .game-logo__menu {
   position:absolute;
   width:250px;
-  height:300px;
   top:0;
-  left:-270px;
+  left:-265px;
   z-index:10;
   margin-top:15px;
-  display:none;
+  visibility:hidden;
+}
+.game-logo__menu-element {
+  opacity:0;
+}
+.game-logo__menu-element:after {
+  position:absolute;
+  content:'';
+  border-top:12px solid transparent;
+  border-bottom:12px solid transparent;
+  border-left:12px solid #333;
+  position:absolute;
+  top:0;
+  bottom:0;
+  right:-8px;
+  height:0px;
+  margin-top:auto;
+  margin-bottom:auto;
+  width:0px;
+  transition:all .3s ease;
+
+}
+
+.game-logo__menu-element:nth-child(2){
+  animation-delay:.3s !important;
+}
+.game-logo__menu-element:nth-child(3){
+  animation-delay: .6s !important;
 
 }
 .game-logo__menu-element {
@@ -276,27 +314,30 @@ a:hover {
   color:#ccc;
   justify-content:center;
   box-shadow:0 0 25px 0 rgba(0,0,0,0.3);
-
   border-radius:20px;
   margin-bottom:20px;
   position:relative;
   z-index:15;
+  transition:all .3s ease;
+  text-decoration:none;
 }
-.game-logo__menu-element:after {
+.game-logo__menu-element:before {
   content:'';
-  width:26px;
-  height:2px;
+  width:120%;
+  height:150%;
   position:absolute;
   right:-22px;
-  transform:rotate(30deg);
-  top:30px;
-  bottom:0;
-  background:#333;
-
+  top:0;
+  background:transparent;
 }
 .game-logo__menu-element:hover {
   background:#111;
   color:#fff;
+  transition:all .3s ease;
+}
+.game-logo__menu-element:hover:after{
+  border-left:12px solid #111;
+  transition:all .3s ease;
 }
 .stats-element__content-right {
   display:flex;
@@ -500,6 +541,7 @@ top: 12px;
   margin-top:20px;
   position:relative;
   z-index:2;
+  transition: all .3s ease;
 }
 .team-element__text-container {
   display:flex;
@@ -556,4 +598,10 @@ top: 12px;
 }
 .from-top-leave {
   display:none;
+}
+
+@keyframes bounce {
+  0% {opacity:0.5;transform: translateX(50px) scale(0)}
+  50% {transform:translateX(25px) scale(1.05)}
+  100% {opacity:1;transform: translateX(0px) scale(1)}
 }

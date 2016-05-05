@@ -18,7 +18,7 @@
       <div class='user-details'>
         <div class='user-details__username'>{{firstName}}</div>
         <div class='user-details__username-main'>{{userName}}</div>
-        <div class='user-details__teams'>Playing at <a href='#' v-for='team in teams'>{{team.DisplayName}},</a></div>
+        <div class='user-details__teams'>Playing at <span v-for='team in teams'><a href='#' >{{team.DisplayName}}</a><span v-if='$index < teams.length-1'>,&nbsp;</span></span></div>
         <div>United States</div>
         <div>Arena Member since {{memberSince}}</div>
         <div>Last Online&nbsp;{{lastOnline | friendlyTime}}</div>
@@ -43,7 +43,11 @@
           <div class='team-element__left-container'>
            <div class='team-element__team-image' v-bind:style="{ backgroundImage: 'url(' + team.LogoUrl + ')' } | validateImage"></div>
            <div class='team-element__team-description'>{{team.TeamDescription}}</div>
-
+           <div class='game-logo__menu'>
+             <a class='game-logo__menu-element'>View Team Profile</a>
+             <a class='game-logo__menu-element'>Become a Member</a>
+             <a class='game-logo__menu-element'>Challenge This Team</a>
+           </div>
          </div>
            <div class='team-element__text-container'>
              <div class='team-element__team-name'>{{team.DisplayName}}</div>
@@ -59,9 +63,9 @@
         <div class='stats-element__background' v-bind:style="{ backgroundImage: 'url(' + game.GameBackgroundUrl + ')' }"></div>
         <div class='stats-element__game-logo' v-bind:style="{ backgroundImage: 'url(' + game.GameImageLargeUrl + ')' }">
         <div class='game-logo__menu'>
-          <div class='game-logo__menu-element'>View Tournaments</div>
-          <div class='game-logo__menu-element'>Visit Official Website</div>
-          <div class='game-logo__menu-element'>Buy on Razer Cortex</div>
+          <a class='game-logo__menu-element'>View Tournaments</a>
+          <a class='game-logo__menu-element' v-bind:href='game.GameWebsite' target='_blank'>Visit Official Website</a>
+          <a class='game-logo__menu-element'>Buy on Razer Cortex</a>
         </div>
         </div>
         <div class='stats-element__content-right'>

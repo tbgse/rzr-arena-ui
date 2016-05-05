@@ -76,6 +76,8 @@ var vm = new Vue({
         vm.games = this.includeWinner(data.Response.Games,data.Response.EntityId,data.Response.Teams);
         $('.button--active').removeClass('button--active');
         $('.menu__button:first-child').addClass('button--active');
+        document.getElementById('window').style.display = 'flex';
+
         });
       },
       includeWinner: function(games,id,teams){
@@ -114,7 +116,6 @@ var vm = new Vue({
     },
     ready: function(){
       this.loadPlayer('travis.howle');
-      document.getElementById('window').style.display = 'flex';
 
     }
   })
