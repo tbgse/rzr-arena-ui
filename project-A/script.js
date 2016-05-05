@@ -57,7 +57,8 @@ var vm = new Vue({
       loadPlayer: function(player){
         $.ajax({
           url:'https://client.arena.razerzone.com/API/Player/'+player+'/',
-          method:'GET'
+          method:'GET',
+          context:this
         }).done(function(data){
           $('body').scrollTop(0);
           d = new Date(Date.parse(data.Response.CreatedDateTime));
@@ -72,7 +73,7 @@ var vm = new Vue({
         vm.profile = data.Response.Profile;
         vm.lastOnline = data.Response.LastActivityDateTime;
         vm.teams = data.Response.Teams;
-        vm.games = includeWinner(data.Response.Games,data.Response.EntityId,data.Response.Teams);
+        vm.games = this.includeWinner(data.Response.Games,data.Response.EntityId,data.Response.Teams);
         $('.button--active').removeClass('button--active');
         $('.menu__button:first-child').addClass('button--active');
         });
